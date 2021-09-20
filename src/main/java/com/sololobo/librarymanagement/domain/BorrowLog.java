@@ -19,7 +19,6 @@ public class BorrowLog {
   @Column(name="book_id", nullable = false)
   private long bookId;
 
-  @Temporal(TemporalType.TIMESTAMP)
   @Column(name="date", nullable = false)
   private LocalDateTime date;
 

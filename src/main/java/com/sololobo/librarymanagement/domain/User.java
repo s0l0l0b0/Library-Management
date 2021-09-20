@@ -3,6 +3,7 @@ package com.sololobo.librarymanagement.domain;
 import com.sololobo.librarymanagement.domain.enumeration.Role;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name="user")
@@ -23,6 +24,8 @@ public class User {
   @Column(name="password", nullable = false)
   private String password;
 
+  @OneToMany(mappedBy = "userId")
+  private Set<BorrowLog> borrowLogs;
 
 
   public long getId() {
@@ -56,4 +59,11 @@ public class User {
     this.password = password;
   }
 
+  public Set<BorrowLog> getBorrowLogs() {
+    return borrowLogs;
+  }
+
+  public void setBorrowLogs(Set<BorrowLog> borrowLogs) {
+    this.borrowLogs = borrowLogs;
+  }
 }
