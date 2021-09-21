@@ -26,8 +26,8 @@ public class CustomUserDetailsService implements UserDetailsService {
             for (Role role : Role.values()) {
                 authorities.add(new SimpleGrantedAuthority(role.name()));
             }
-            authorities.add(new SimpleGrantedAuthority(Role.STUDENT.name()));
-            authorities.add(new SimpleGrantedAuthority(Role.FACULTY.name()));
+        } else {
+            authorities.add(new SimpleGrantedAuthority(user.getRole().name()));
         }
         return authorities;
     }
@@ -37,7 +37,9 @@ public class CustomUserDetailsService implements UserDetailsService {
         Optional<User> userOp = userRepository.getUserByEmail(email);
         if (userOp.isPresent()) {
             User user = userOp.get();
-            return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), true, true, true, true, getGrantedAuthorities(user));
+            return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
+                    true, true, true, true,
+                    getGrantedAuthorities(user));
         }
         return null;
     }
