@@ -33,12 +33,11 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String userIdValue) throws UsernameNotFoundException {
-        Long userId = Long.valueOf(userIdValue);
-        Optional<User> userOp = userRepository.findById(userId);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Optional<User> userOp = userRepository.getUserByEmail(email);
         if (userOp.isPresent()) {
             User user = userOp.get();
-            return new org.springframework.security.core.userdetails.User(userIdValue, user.getPassword(), true, true, true, true, getGrantedAuthorities(user));
+            return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), true, true, true, true, getGrantedAuthorities(user));
         }
         return null;
     }

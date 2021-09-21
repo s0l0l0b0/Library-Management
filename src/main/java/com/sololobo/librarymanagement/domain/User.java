@@ -14,6 +14,9 @@ public class User {
   @Column(name="id", nullable = false)
   private long id;
 
+  @Column(name="email", nullable = false)
+  private String email;
+
   @Column(name="name", nullable = false)
   private String name;
 
@@ -65,5 +68,13 @@ public class User {
 
   public void setBorrowLogs(Set<BorrowLog> borrowLogs) {
     this.borrowLogs = borrowLogs;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
   }
 }

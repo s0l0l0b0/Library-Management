@@ -15,7 +15,7 @@ public class TestController {
 
     @GetMapping("/")
     public String home() {
-        Optional<User> userOp = userRepository.findById(1L);
+        Optional<User> userOp = userRepository.getUserByEmail("smshaon02@yahoo.com");
         if (userOp.isPresent()) {
             System.out.println("UserName:" + userOp.get().getName());
         }
