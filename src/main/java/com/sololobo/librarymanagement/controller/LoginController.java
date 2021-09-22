@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class LoginController {
     @GetMapping("/login")
     public String login(){
-        return "home";
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        if (Objects.nonNull(authentication)) {
+//            return "redirect:/";
+//        }
+        return "login";
     }
 }

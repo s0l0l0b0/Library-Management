@@ -20,6 +20,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+
     @Autowired
     CustomUserDetailsService customUserDetailsService;
 
@@ -30,7 +31,18 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        super.configure(http);
-//        http.formLogin().loginPage("/login");
+//        super.configure(http);
+        http
+                .authorizeRequests()
+//                .antMatchers("/**").hasAnyRole(Role.STUDENT.name(), Role.FACULTY.name(), Role.ADMIN.name())
+                .antMatchers("/static/**").permitAll()
+                .antMatchers("/login").permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .formLogin().loginPage("/login")
+                .and()
+                .logout()
+                .logoutSuccessUrl("/login");
     }
 }
