@@ -10,7 +10,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/style.css">
-    <title> CSS Login Screen Tutorial </title>
+    <title> Login </title>
 </head>
 <body>
 <div class="login-page">
@@ -25,7 +25,7 @@
             <input type="text" name="username" placeholder="username"/>
             <input type="password" name="password" placeholder="password"/>
             <button type="submit">login</button>
-            <p class="message">Not registered? <a href="#">Create an account</a></p>
+            <p class="message">Not registered? <a href="${pageContext.request.contextPath}/registration">Create an account</a></p>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
     </div>
