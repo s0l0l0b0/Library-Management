@@ -72,41 +72,45 @@
     </style>
 </head>
 <body>
-<form action="/registration" method="post">
+${error_msg}
+<form action="/registration" method="POST">
     <div class="container">
         <center>  <h1>REGISTRATION</h1> </center>
         <hr>
         <label> Username </label>
-        <input type="text" name="username" placeholder= "Username" size="15" required />
+        <input type="text" name="userName" placeholder= "Username" required />
 
         <label for="email"><b>Email</b></label>
-        <input type="text" placeholder="Enter Email" name="email" required>
+        <input id="email" type="text" placeholder="Enter Email" name="email" required>
 
         <div>
             <label>
                 You Are :
             </label>
 
-            <select>
-                <option value="role">STUDENT</option>
-                <option value="role">FACULTY</option>
+            <select name="role">
+                <option value="STUDENT">STUDENT</option>
+                <option value="FACULTY">FACULTY</option>
             </select>
         </div>
 
 
 
         <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="psw" required>
+        <input id="psw" type="password" placeholder="Enter Password" name="password1" required>
 
         <label for="psw-repeat"><b>Re-type Password</b></label>
-        <input type="password" placeholder="Retype Password" name="psw-repeat" required>
+        <input id="psw-repeat" type="password" placeholder="Retype Password" name="password2" required>
+
         <button type="submit" class="registerbtn">Register</button>
+
+        <input
+                type="hidden"
+                name="${_csrf.parameterName}"
+                value="${_csrf.token}"
+        />
+    </div>
 </form>
 
-<input
-        type="hidden"
-        name="${_csrf.parameterName}"
-        value="${_csrf.token}"
-/>
 </body>
 </html>
