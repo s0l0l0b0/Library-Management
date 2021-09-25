@@ -68,14 +68,14 @@
             font-size: 14px;
             /*-webkit-transition: all 0.3 ease;*/
             /*transition: all 0.3 ease;*/
-            cursor: pointer;
+            cursor: pointer}
     </style>
 </head>
 <body>
 ${error_msg}
-<form action="/registration" method="POST">
+<form action="${pageContext.request.contextPath}/registration" method="POST">
     <div class="container">
-        <center>  <h1>REGISTRATION</h1> </center>
+        <div style="text-align: center;">  <h1>REGISTRATION</h1> </div>
         <hr>
         <label> Username </label>
         <input type="text" name="userName" placeholder= "Username" required />
@@ -112,5 +112,11 @@ ${error_msg}
     </div>
 </form>
 
+<form action="${pageContext.request.contextPath}/logout" method="post">
+    <input type="hidden"
+           name="${_csrf.parameterName}"
+           value="${_csrf.token}"/>
+    <input type="submit" value="Logout">
+</form>
 </body>
 </html>
