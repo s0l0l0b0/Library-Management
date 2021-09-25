@@ -1,6 +1,7 @@
 package com.sololobo.librarymanagement.config;
 
 import com.sololobo.librarymanagement.domain.enumeration.Role;
+import com.sololobo.librarymanagement.security.CustomLoginSuccessHandler;
 import com.sololobo.librarymanagement.security.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +26,9 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Autowired
     CustomUserDetailsService customUserDetailsService;
 
+    @Autowired
+    CustomLoginSuccessHandler loginSuccessHandler;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customUserDetailsService);
@@ -43,6 +47,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .authenticated()
                 .and()
                 .formLogin().loginPage("/login")
+                .successHandler(loginSuccessHandler)
                 .and()
                 .logout()
                 .logoutSuccessUrl("/login");
