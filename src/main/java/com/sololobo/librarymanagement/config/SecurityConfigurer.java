@@ -1,5 +1,6 @@
 package com.sololobo.librarymanagement.config;
 
+import com.sololobo.librarymanagement.domain.enumeration.Role;
 import com.sololobo.librarymanagement.security.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -37,6 +38,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/**").hasAnyRole(Role.STUDENT.name(), Role.FACULTY.name(), Role.ADMIN.name())
                 .antMatchers("/static/**").permitAll()
                 .antMatchers("/login", "/registration").permitAll()
+                .antMatchers("/admin/**").hasAnyAuthority(Role.ADMIN.name())
                 .anyRequest()
                 .authenticated()
                 .and()

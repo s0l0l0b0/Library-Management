@@ -10,7 +10,7 @@ public class LoginController {
     @GetMapping("/login")
     public String login() {
         if (Utility.isAdminUser()) {
-            return "admin";
+            return "redirect:/admin";
         }
         if (Utility.isLoggedInUser()) {
             return "redirect:/";
