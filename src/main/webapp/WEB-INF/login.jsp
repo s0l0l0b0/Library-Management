@@ -18,7 +18,14 @@
         <div class="login">
             <div class="login-header">
                 <h3>LOGIN</h3>
-                <p>Please enter your credentials to login.</p>
+                <p>
+                    <c:if test="${not empty error_msg}">
+                        <span style="color:red">${error_msg}</span>
+                </c:if>
+                    <c:if test="${empty error_msg}">
+                        Please enter your credentials to login.
+                    </c:if>
+                </p>
             </div>
         </div>
         <form class="login-form" action="${pageContext.request.contextPath}/login" method="POST">
