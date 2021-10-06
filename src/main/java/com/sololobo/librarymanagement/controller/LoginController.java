@@ -24,7 +24,7 @@ public class LoginController {
             return "redirect:/admin";
         }
         if (Utility.isLoggedInUser()) {
-            return "redirect:/";
+            return "redirect:/user";
         }
         return "login";
     }
