@@ -27,9 +27,19 @@ public class User {
   @Column(name="password", nullable = false)
   private String password;
 
+  @Column(name = "is_active", nullable = false)
+  private Boolean isActive;
+
   @OneToMany(mappedBy = "userId")
   private Set<BorrowLog> borrowLogs;
 
+  public Boolean getIsActive() {
+    return isActive;
+  }
+
+  public void setIsActive(Boolean active) {
+    isActive = active;
+  }
 
   public long getId() {
     return id;
