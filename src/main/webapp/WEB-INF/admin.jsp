@@ -61,6 +61,65 @@
             border: 1px solid #ddd;
             margin-bottom: 12px;
         }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
     </style>
 </head>
 
@@ -72,7 +131,13 @@
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <input type="submit" value="Logout">
     </form>
-    <button><a href="add_new_book">Add New Book</a>
+<%--    <form action="add_new_book" method="post">--%>
+<%--        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
+<%--        <input type="submit" value="Add New Book">--%>
+<%--    </form>--%>
+    <button>
+        <a href="/addNewBook">Add New Book</a>
+
     </button>
 </div>
 
@@ -87,10 +152,8 @@
                 <th>ID</th>
                 <th>User Name</th>
                 <th>User Role</th>
-<%--                <th>Password</th>--%>
                 <th>Email</th>
-                <th>Email</th>
-                <th>Edit</th>
+                <th>Active Status</th>
             </tr>
 
             <c:forEach items="${user}" var="item">
@@ -98,10 +161,13 @@
                     <td>${item.id}</td>
                     <td>${item.name}</td>
                     <td>${item.role}</td>
-<%--                    <td>${item.password}</td>--%>
                     <td>${item.email}</td>
-                    <td>${item.isActive}</td>
-                    <th><button>Deactivate</button>
+                    <td>
+                        <label class="switch">
+                            <input onclick="toSetActiveInactiveUser(${item.id})" id="activeSlider" type="checkbox" ${item.isActive == 'true'? "checked":""}>
+                            <span class="slider round"></span>
+                        </label>
+                    </td>
                 </tr>
             </c:forEach>
 
@@ -111,24 +177,24 @@
 
     <div class="column">
         <center><h2>BOOKS</h2></center>
-        <input type="text" id="searchBook" onkeyup="toFindBook()" placeholder="Search for books by ID" title="Type in a name">
+        <input type="text" id="searchBook" onkeyup="toFindBook()" placeholder="Search for books by ISBN" title="Type in a name">
         <table id="bookTable">
             <tr>
                 <th>ID</th>
+                <th>ISBN</th>
                 <th>Title</th>
                 <th>Writer</th>
                 <th>Type</th>
-                <th>Total Amount</th>
                 <th>Available Amount</th>
                 <th>Edit</th>
             </tr>
             <c:forEach items="${book}" var="item">
                 <tr>
                     <td>${item.id}</td>
+                    <td>${item.isbn}</td>
                     <td>${item.title}</td>
                     <td>${item.writer}</td>
                     <td>${item.type}</td>
-                    <td>${item.totalAmount}</td>
                     <td>${item.available}</td>
                     <th><button>Edit</button>
                 </tr>
@@ -141,7 +207,7 @@
 
 <script>
     function toFindUser() {
-        var input, filter, table, tr, td, i, txtValue;
+        let input, filter, table, tr, td, i, txtValue;
         input = document.getElementById("searchUser");
         filter = input.value.toUpperCase();
         table = document.getElementById("userTable");
@@ -160,13 +226,13 @@
     }
 
     function toFindBook() {
-        var input, filter, table, tr, td, i, txtValue;
+        let input, filter, table, tr, td, i, txtValue;
         input = document.getElementById("searchBook");
         filter = input.value.toUpperCase();
         table = document.getElementById("bookTable");
         tr = table.getElementsByTagName("tr");
         for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[0];
+            td = tr[i].getElementsByTagName("td")[1];
             if (td) {
                 txtValue = td.textContent || td.innerText;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -177,6 +243,14 @@
             }
         }
     }
+    function toSetActiveInactiveUser(userId){
+        fetch("/activateInactive?userId="+userId)
+
+        .catch(function() {
+            alert("Error occurred!");
+        });
+    }
+
 </script>
 </body>
 </html>
