@@ -1,43 +1,53 @@
 package com.sololobo.librarymanagement.domain;
 
+
+import com.sololobo.librarymanagement.domain.enumeration.TypeOfBook;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name="book")
 public class Book {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name="id", nullable = false)
+  @Column(name = "id", nullable = false)
   private long id;
-
-  @Column(name="title")
+  @Column(name = "isbn", nullable = false)
+  private String isbn;
+  @Column(name = "title", nullable = false)
   private String title;
-
-  @Column(name="writer")
+  @Column(name = "writer")
   private String writer;
 
-  @Column(name="type")
-  private String type;
+  @Enumerated(value = EnumType.STRING)
+  @Column(name = "type")
+  private TypeOfBook type;
 
-  @Column(name="total_amount", nullable = false)
-  private int totalAmount;
-
-  @Column(name="available_amount", nullable = false)
-  private int availableAmount;
+  @Column(name = "available")
+  private long available;
 
 
   public long getId() {
     return id;
   }
+
   public void setId(long id) {
     this.id = id;
+  }
+
+
+  public String getIsbn() {
+    return isbn;
+  }
+
+  public void setIsbn(String isbn) {
+    this.isbn = isbn;
   }
 
 
   public String getTitle() {
     return title;
   }
+
   public void setTitle(String title) {
     this.title = title;
   }
@@ -46,32 +56,26 @@ public class Book {
   public String getWriter() {
     return writer;
   }
+
   public void setWriter(String writer) {
     this.writer = writer;
   }
 
 
-  public String getType() {
+  public TypeOfBook getType() {
     return type;
   }
-  public void setType(String type) {
+
+  public void setType(TypeOfBook type) {
     this.type = type;
   }
 
-
-  public int getTotalAmount() {
-    return totalAmount;
-  }
-  public void setTotalAmount(int total_amount) {
-    this.totalAmount = total_amount;
+  public long getAvailable() {
+    return available;
   }
 
-
-  public int getAvailable() {
-    return availableAmount;
-  }
-  public void setAvailable(int available) {
-    this.availableAmount = available;
+  public void setAvailable(long available) {
+    this.available = available;
   }
 
 }
