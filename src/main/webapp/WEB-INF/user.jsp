@@ -94,10 +94,20 @@
                 right: 35px;
             }
         }
+        .topnav-right {
+            float: right;
+        }
     </style>
 </head>
 <body>
 <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Borrow List</span>
+<div class="topnav-right">
+    <form action="/logout" method="post">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <input type="submit" value="Logout">
+    </form>
+</div>
+
 <div id="myNav" class="overlay">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <div class="overlay-content">
