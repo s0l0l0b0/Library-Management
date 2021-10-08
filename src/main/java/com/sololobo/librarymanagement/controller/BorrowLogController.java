@@ -36,13 +36,18 @@ public class BorrowLogController {
         Optional<Book> byBookId = bookRepository.findById(bookId);
 
         if (userByEmail.isPresent() && byBookId.isPresent()){
-            borrowLog.setUserId(userByEmail.get().getId());
-            borrowLog.setBookId(bookId);
-            borrowLog.setDate(LocalDateTime.now());
-            Book book = byBookId.get();
-            book.setAvailable(0);
-            borrowLogRepository.save(borrowLog);
-            bookRepository.save(book);
+            if (borrowLogRepository.getBorrowCountByUserId(userByEmail.get().getId())< Utility.borrowLimit(userByEmail.get())){
+                borrowLog.setUserId(userByEmail.get().getId());
+                borrowLog.setBookId(bookId);
+                borrowLog.setDate(LocalDateTime.now());
+                Book book = byBookId.get();
+                book.setAvailable(0);
+                borrowLogRepository.save(borrowLog);
+                bookRepository.save(book);
+            }else {
+                throw new IllegalArgumentException("Reached limitation!");
+            }
+
         }else {
             throw new IllegalArgumentException("Illegal Operation!");
         }
