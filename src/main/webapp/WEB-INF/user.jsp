@@ -153,7 +153,6 @@
         <th>Title</th>
         <th>Writer</th>
         <th>Type</th>
-        <th>Available Amount</th>
         <th>Borrow</th>
     </tr>
 
@@ -164,7 +163,6 @@
             <td>${item.title}</td>
             <td>${item.writer}</td>
             <td>${item.type}</td>
-            <td>${item.available}</td>
             <td>
                 <button style='font-size:24px;color:lawngreen'><i class='fas fa-plus'></i>
 
