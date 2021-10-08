@@ -132,8 +132,16 @@
                     <td>${item.type}</td>
                     <td>${item.available}</td>
                     <td>
-                        <button style='font-size:24px;color:lawngreen'><i class='fas fa-undo-alt'></i>
-                        </button>
+                        <i class='fas fa-undo-alt'></i>
+                        <form action="/borrow?bookId=${item.id}&userId=${user.id}" method="post">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            <input type="submit" value="Logout">
+                        </form>
+<%--                        <button style='font-size:24px;color:lawngreen'>--%>
+<%--                            <i class='fas fa-undo-alt'></i>--%>
+<%--                            <a href="/borrow?bookId=${item.id}&userId=${user.id}"></a>--%>
+
+<%--                        </button>--%>
                     </td>
                 </tr>
             </c:forEach>
@@ -164,9 +172,13 @@
             <td>${item.writer}</td>
             <td>${item.type}</td>
             <td>
-                <button style='font-size:24px;color:lawngreen'><i class='fas fa-plus'></i>
-
-                </button>
+<%--                <button style='font-size:24px;color:lawngreen'><i class='fas fa-plus'></i>--%>
+<%--                    --%>
+<%--                </button>--%>
+            <form action="${pageContext.request.contextPath}/borrow?bookId=${item.id}" method="post">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <input type="submit" value="Borrow" style='font-size:24px;color:lawngreen'>
+            </form>
             </td>
         </tr>
     </c:forEach>
@@ -200,6 +212,7 @@
     function closeNav() {
         document.getElementById("myNav").style.width = "0%";
     }
+
 </script>
 </body>
 </html>
