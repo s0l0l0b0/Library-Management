@@ -19,7 +19,7 @@ public class UserController {
 
     @GetMapping("/user")
     public ModelAndView adminHomePage() {
-        List<Book> findAllBook = bookRepository.findAll();
+        List<Book> findAllBook = bookRepository.getAvailableBooks();
         return new ModelAndView("user")
                 .addObject("book", findAllBook);
     }
