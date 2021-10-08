@@ -79,18 +79,20 @@
     </head>
     <body>
 
-    <h2>Responsive Form</h2>
-    <p>Resize the browser window to see the effect. When the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other.</p>
+    <h2 style="text-align: center">Add New Book</h2>
+
 
         <div class="container">
-            <form action="addNewBook.jsp" method="post">
-
+            <form action="/addNewBook" method="post">
+                <c:if test="${not empty book}">
+                    <input type="hidden" name="id" value="${book.id}">
+                </c:if>
                 <div class="row">
                     <div class="col-25">
                         <label for="isbn">ISBN</label>
                     </div>
                     <div class="col-75">
-                        <input type="text" id="isbn" name="isbn" placeholder="enter the isbn here...">
+                        <input type="text" id="isbn" name="isbn" value="${book.isbn}" placeholder="enter the isbn here...">
                     </div>
                 </div>
                 <div class="row">
@@ -98,30 +100,29 @@
                         <label for="title">Title</label>
                     </div>
                     <div class="col-75">
-                        <input type="text" id="title" name="title" placeholder="enter the title here...">
+                        <input type="text" id="title" name="title" value="${book.title}" placeholder="enter the title here...">
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-25">
-                        <label for="type">Country</label>
+                        <label for="title">Writer</label>
                     </div>
                     <div class="col-75">
-                        <select id="type" name="country">
+                        <input type="text" id="writer" name="writer" value="${book.writer}" placeholder="enter the name of writer here...">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="type">Type</label>
+                    </div>
+                    <div class="col-75">
+                        <select id="type" name="type">
                             <c:forEach items="${typeOfBooks}" var="item">
-                            <option>
+                            <option ${book.type == item? "selected":""}>
                                 ${item}
                             </option>
                             </c:forEach>
                         </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="subject">Subject</label>
-                    </div>
-                    <div class="col-75">
-                        <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
                     </div>
                 </div>
                 <br>

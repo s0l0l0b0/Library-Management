@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Optional;
 
 @Controller
 public class AddNewBookController {
@@ -23,7 +26,17 @@ public class AddNewBookController {
 
     @PostMapping(value= "/addNewBook")
     public ModelAndView postNewBook(Book book){
+        book.setAvailable(1);
         bookRepository.save(book);
         return new ModelAndView("redirect:/admin");
+    }
+
+    @GetMapping("/editBook")
+    public ModelAndView editBook(@RequestParam Long id){
+        Optional<Book> optionalBook = bookRepository.findById(id);
+        ModelAndView modelAndView = new ModelAndView("addNewBook");
+        optionalBook.ifPresent(book -> modelAndView.addObject("book", book));
+        return modelAndView
+                .addObject("typeOfBooks", TypeOfBook.values());
     }
 }

@@ -146,7 +146,7 @@
         <table id="userTable">
             <center><h2>USERS</h2></center>
             <input type="text" id="searchUser" onkeyup="toFindUser()"
-                   placeholder="Search for user by ID" title="Type in a name">
+                   placeholder="Search for user by email..." title="Type in a name">
 
             <tr>
                 <th>ID</th>
@@ -164,7 +164,8 @@
                     <td>${item.email}</td>
                     <td>
                         <label class="switch">
-                            <input onclick="toSetActiveInactiveUser(${item.id})" id="activeSlider" type="checkbox" ${item.isActive == 'true'? "checked":""}>
+                            <input onclick="toSetActiveInactiveUser(${item.id})" id="activeSlider"
+                                   type="checkbox" ${item.isActive == 'true'? "checked":""}>
                             <span class="slider round"></span>
                         </label>
                     </td>
@@ -177,7 +178,7 @@
 
     <div class="column">
         <center><h2>BOOKS</h2></center>
-        <input type="text" id="searchBook" onkeyup="toFindBook()" placeholder="Search for books by ISBN" title="Type in a name">
+        <input type="text" id="searchBook" onkeyup="toFindBook()" placeholder="Search for books by ISBN..." title="Type in a name">
         <table id="bookTable">
             <tr>
                 <th>ID</th>
@@ -196,7 +197,8 @@
                     <td>${item.writer}</td>
                     <td>${item.type}</td>
                     <td>${item.available}</td>
-                    <th><button>Edit</button>
+                    <th><button>
+                        <a href="/editBook?id=${item.id}">Edit Book</a></button>
                 </tr>
             </c:forEach>
 
@@ -213,7 +215,7 @@
         table = document.getElementById("userTable");
         tr = table.getElementsByTagName("tr");
         for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[0];
+            td = tr[i].getElementsByTagName("td")[3];
             if (td) {
                 txtValue = td.textContent || td.innerText;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
