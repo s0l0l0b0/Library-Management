@@ -1,6 +1,7 @@
 package com.sololobo.librarymanagement.utility;
 
 
+import com.sololobo.librarymanagement.domain.User;
 import com.sololobo.librarymanagement.domain.enumeration.Role;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -30,5 +31,15 @@ public class Utility {
 
     public static String getLoggedInUserEmail(){
         return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
+
+    public static Integer borrowLimit(User user){
+        if (user.getRole()==Role.FACULTY){
+            return 10;
+        }
+        if (user.getRole()==Role.STUDENT){
+            return 5;
+        }
+        return 0;
     }
 }
