@@ -27,4 +27,8 @@ public class Utility {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return Objects.nonNull(authentication) && authentication.getAuthorities().contains(new SimpleGrantedAuthority(Role.ADMIN.name()));
     }
+
+    public static String getLoggedInUserEmail(){
+        return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
 }
