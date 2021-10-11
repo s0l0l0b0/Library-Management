@@ -4,6 +4,7 @@ package com.sololobo.librarymanagement.domain;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+
 @Entity
 @Table(name = "borrow_log", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "book_id"}))
 public class BorrowLog {
@@ -12,6 +13,17 @@ public class BorrowLog {
   @Column(name="id", nullable = false)
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
+
+
+  @ManyToOne
+  @JoinColumn(name = "user_id", insertable = false, updatable = false)
+  private User user;
+
+  @ManyToOne
+  @JoinColumn(name = "book_id", insertable = false, updatable = false)
+  private Book book;
+
+
 
   @Column(name="user_id", nullable = false)
   private Long userId;
@@ -56,6 +68,21 @@ public class BorrowLog {
 
   public void setDate(LocalDateTime date) {
     this.date = date;
+  }
+
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {this.user = user;
+  }
+
+  public Book getBook() {
+    return book;
+  }
+
+  public void setBook(Book book) {
+    this.book = book;
   }
 
 }
