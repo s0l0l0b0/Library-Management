@@ -35,10 +35,10 @@ public class Utility {
 
     public static Integer borrowLimit(User user){
         if (user.getRole()==Role.FACULTY){
-            return 10;
+            return 5;
         }
         if (user.getRole()==Role.STUDENT){
-            return 5;
+            return 3;
         }
         return 0;
     }
