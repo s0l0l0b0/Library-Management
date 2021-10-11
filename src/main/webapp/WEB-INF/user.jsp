@@ -119,28 +119,20 @@
                 <th>Title</th>
                 <th>Writer</th>
                 <th>Type</th>
-                <th>Available Amount</th>
-                <th>return</th>
+                <th>Return</th>
             </tr>
 
-            <c:forEach items="${book}" var="item">
+            <c:forEach items="${borrowLogs}" var="item">
                 <tr>
                     <td>${item.id}</td>
-                    <td>${item.isbn}</td>
-                    <td>${item.title}</td>
-                    <td>${item.writer}</td>
-                    <td>${item.type}</td>
-                    <td>${item.available}</td>
+                    <td>${item.book.isbn}</td>
+                    <td>${item.book.title}</td>
+                    <td>${item.book.writer}</td>
+                    <td>${item.book.type}</td>
                     <td>
-                        <i class='fas fa-undo-alt'></i>
-                        <form action="/borrow?bookId=${item.id}&userId=${user.id}" method="post">
-                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                            <input type="submit" value="Logout">
-                        </form>
 <%--                        <button style='font-size:24px;color:lawngreen'>--%>
 <%--                            <i class='fas fa-undo-alt'></i>--%>
 <%--                            <a href="/borrow?bookId=${item.id}&userId=${user.id}"></a>--%>
-
 <%--                        </button>--%>
                     </td>
                 </tr>
@@ -177,7 +169,7 @@
 <%--                </button>--%>
             <form action="${pageContext.request.contextPath}/borrow?bookId=${item.id}" method="post">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                <input type="submit" value="Borrow" style='font-size:24px;color:lawngreen'>
+                <input type="submit" value="Borrow" style='font-size:20px;color:lawngreen'>
             </form>
             </td>
         </tr>
