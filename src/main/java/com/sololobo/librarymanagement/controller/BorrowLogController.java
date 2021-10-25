@@ -9,11 +9,15 @@ import com.sololobo.librarymanagement.repository.UserRepository;
 import com.sololobo.librarymanagement.utility.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.transaction.Transactional;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -29,7 +33,8 @@ public class BorrowLogController {
 
     @ResponseBody
     @PostMapping("/borrow")
-    public ModelAndView borrow(@RequestParam Long bookId){
+    @Transactional
+    public ModelAndView borrow(@RequestParam Long bookId, RedirectAttributes redirectAttributes){
         BorrowLog borrowLog = new BorrowLog();
         String email = Utility.getLoggedInUserEmail();
         Optional<User> userByEmail = userRepository.getUserByEmail(email);
@@ -45,12 +50,42 @@ public class BorrowLogController {
                 borrowLogRepository.save(borrowLog);
                 bookRepository.save(book);
             }else {
-                throw new IllegalArgumentException("Reached limitation!");
+                redirectAttributes.addFlashAttribute("errorMsg", "Reached Borrow Limit!");
             }
 
         }else {
-            throw new IllegalArgumentException("Illegal Operation!");
+            redirectAttributes.addFlashAttribute("errorMsg", "Illegal Operation!");
         }
         return new ModelAndView("redirect:/user");
+    }
+
+    @ResponseBody
+    @GetMapping("/return")
+    @Transactional
+    public String returnBook(@RequestParam Long borrowLogId){
+        String email = Utility.getLoggedInUserEmail();
+        Optional<User> userByEmail = userRepository.getUserByEmail(email);
+        Optional<BorrowLog> byId = borrowLogRepository.findById(borrowLogId);
+        if (byId.isPresent()){
+            BorrowLog borrowLog = byId.get();
+            if (userByEmail.isPresent()){
+                if (borrowLog.getUserId().equals(userByEmail.get().getId())){
+                    Book book = borrowLog.getBook();
+                    book.setAvailable(1);
+                    bookRepository.save(book);
+                    borrowLogRepository.delete(borrowLog);
+
+                    LocalDateTime date = borrowLog.getDate();
+                    LocalDateTime now = LocalDateTime.now();
+                    long toDays = Duration.between(date, now).toDays();
+                    if (toDays > 2){
+                        long late = toDays - 2;
+                        long fine = late*10;
+                        return "Your fine is: " + fine;
+                    }
+                }
+            }
+        }
+        return null;
     }
 }

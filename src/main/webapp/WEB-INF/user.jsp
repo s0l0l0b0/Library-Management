@@ -119,6 +119,7 @@
                 <th>Title</th>
                 <th>Writer</th>
                 <th>Type</th>
+                <th>Borrowed Date</th>
                 <th>Return</th>
             </tr>
 
@@ -129,11 +130,9 @@
                     <td>${item.book.title}</td>
                     <td>${item.book.writer}</td>
                     <td>${item.book.type}</td>
+                    <td>${item.date}</td>
                     <td>
-<%--                        <button style='font-size:24px;color:lawngreen'>--%>
-<%--                            <i class='fas fa-undo-alt'></i>--%>
-<%--                            <a href="/borrow?bookId=${item.id}&userId=${user.id}"></a>--%>
-<%--                        </button>--%>
+                        <input type="button" data-val="${item.id}" value="Return" onclick="deleteRow(this)">
                     </td>
                 </tr>
             </c:forEach>
@@ -143,6 +142,9 @@
 
 <h2 style="text-align: center">Welcome to the Library</h2>
 <br>
+<c:if test="${not empty errorMsg}">
+    ${errorMsg}
+</c:if>
 
 <input type="text" id="thisInput" onkeyup="thisSearch()" placeholder="Search book by title..." title="Type in a name">
 
@@ -203,6 +205,25 @@
 
     function closeNav() {
         document.getElementById("myNav").style.width = "0%";
+    }
+
+    function deleteRow(r) {
+        let borrowLogId = r.getAttribute("data-val");
+        console.log(borrowLogId)
+        fetch('/return?borrowLogId=' + borrowLogId)
+        .then((response) => {
+            console.log(response);
+            return response.text()
+        }).then(msg => {
+            if (msg) {
+                alert(msg);
+            }
+            document.getElementById("borrowedBook").deleteRow(r.parentNode.parentNode.rowIndex);
+        }).catch(error => {
+            if (error) {
+                alert("Error Occured!");
+            }
+        });
     }
 
 </script>
