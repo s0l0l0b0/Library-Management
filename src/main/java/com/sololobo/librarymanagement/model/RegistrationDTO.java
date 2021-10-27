@@ -56,6 +56,7 @@ public class RegistrationDTO {
         user.setEmail(this.getEmail());
         user.setName(this.getUserName());
         user.setRole(this.getRole());
+        user.setIsActive(true);
         user.setPassword(this.getPassword1());
         return user;
     }
