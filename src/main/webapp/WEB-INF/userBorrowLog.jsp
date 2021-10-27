@@ -9,7 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>user's borrow log</title>
 
     <style>
         * {
@@ -125,7 +125,7 @@
 <body>
 
 <div class="overlay-content">
-    <h1>Your Borrowed Books ${user.name}</h1>
+<h1 style="text-align: center">Borrow Info</h1>
     <table id="borrowedBook">
         <tr>
             <th>ID</th>
