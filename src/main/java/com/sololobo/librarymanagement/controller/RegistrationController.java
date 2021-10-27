@@ -33,7 +33,8 @@ public class RegistrationController {
             User user = registrationDTO.toUser();
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);
-            return new ModelAndView("login");
+            return new ModelAndView("login")
+                    .addObject("successMsg", "Registration Successful!");
         }
         catch(IllegalArgumentException ex) {
             modelAndView.addObject("error_msg", ex.getMessage());

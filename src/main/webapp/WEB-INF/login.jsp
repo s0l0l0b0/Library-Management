@@ -13,12 +13,16 @@
     <title> Login </title>
 </head>
 <body>
+
 <div class="login-page">
     <div class="form">
         <div class="login">
             <div class="login-header">
                 <h3>LOGIN</h3>
                 <p>
+                    <c:if test="${not empty successMsg}">
+                        <span style="color:green">${successMsg}</span>
+                    </c:if>
                     <c:if test="${not empty error_msg}">
                         <span style="color:red">${error_msg}</span>
                 </c:if>
