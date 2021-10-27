@@ -204,7 +204,7 @@
     }
 
     function closeNav() {
-        document.getElementById("myNav").style.width = "0%";
+        window.location.href = "/user";
     }
 
     function deleteRow(r) {
