@@ -3,6 +3,7 @@ package com.sololobo.librarymanagement.controller;
 import com.sololobo.librarymanagement.domain.Book;
 import com.sololobo.librarymanagement.domain.User;
 import com.sololobo.librarymanagement.repository.BookRepository;
+import com.sololobo.librarymanagement.repository.BorrowLogRepository;
 import com.sololobo.librarymanagement.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,8 @@ public class AdminController {
     UserRepository userRepository;
     @Autowired
     BookRepository bookRepository;
+    @Autowired
+    BorrowLogRepository borrowLogRepository;
 
     @GetMapping("/admin")
     public ModelAndView adminHomePage() {
@@ -30,17 +33,29 @@ public class AdminController {
                 .addObject("user", findAllUser)
                 .addObject("book", findAllBook);
     }
-//rest endpoint
+
+    //rest endpoint
     @ResponseBody
     @GetMapping("/activateInactive")
-    public void activateUser(@RequestParam Long userId){
+    public void activateUser(@RequestParam Long userId) {
         Optional<User> byId = userRepository.findById(userId);
-        if (byId.isPresent()){
+        if (byId.isPresent()) {
             User user = byId.get();
             user.setIsActive(!user.getIsActive());
             userRepository.save(user);
-        }else {
+        } else {
             throw new IllegalArgumentException("User Not Found!");
         }
+    }
+
+    @GetMapping("/userBorrowLog")
+    public ModelAndView userBorrowLog(@RequestParam String userEmail){
+        Optional<User> byId = userRepository.getUserByEmail(userEmail);
+        if (byId.isPresent()){
+            User user = byId.get();
+            return new ModelAndView(("userBorrowLog"))
+                    .addObject("borrowLogs", borrowLogRepository.getBorrowLogBy(user.getId()));
+        }
+        throw new IllegalArgumentException("User not found!");
     }
 }

@@ -137,7 +137,6 @@
 <%--    </form>--%>
     <button>
         <a href="/addNewBook">Add New Book</a>
-
     </button>
 </div>
 
@@ -161,7 +160,8 @@
                     <td>${item.id}</td>
                     <td>${item.name}</td>
                     <td>${item.role}</td>
-                    <td>${item.email}</td>
+                    <td><a href="/userBorrowLog?userEmail=${item.email}" class="btn btn-green">${item.email}</a></td>
+<%--                    <td>${item.email}</td>--%>
                     <td>
                         <label class="switch">
                             <input onclick="toSetActiveInactiveUser(${item.id})" id="activeSlider"
