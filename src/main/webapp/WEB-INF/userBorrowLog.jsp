@@ -134,16 +134,20 @@
             <th>Writer</th>
             <th>Type</th>
             <th>Borrowed Date</th>
+            <th>Fine</th>
+
         </tr>
 
-        <c:forEach items="${borrowLogs}" var="item">
+        <c:forEach items="${borrowLogFineDTOList}" var="item">
             <tr>
-                <td>${item.id}</td>
-                <td>${item.book.isbn}</td>
-                <td>${item.book.title}</td>
-                <td>${item.book.writer}</td>
-                <td>${item.book.type}</td>
-                <td>${item.date}</td>
+                <td>${item.borrowLog.id}</td>
+                <td>${item.borrowLog.book.isbn}</td>
+                <td>${item.borrowLog.book.title}</td>
+                <td>${item.borrowLog.book.writer}</td>
+                <td>${item.borrowLog.book.type}</td>
+                <td>${item.borrowLog.date}</td>
+                <td>${item.fine}</td>
+
             </tr>
         </c:forEach>
     </table>

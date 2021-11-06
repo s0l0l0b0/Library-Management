@@ -4,13 +4,16 @@ package com.sololobo.librarymanagement.utility;
 import com.sololobo.librarymanagement.domain.BorrowLog;
 import com.sololobo.librarymanagement.domain.User;
 import com.sololobo.librarymanagement.domain.enumeration.Role;
+import com.sololobo.librarymanagement.model.BorrowLogFineDTO;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Utility {
 
@@ -57,6 +60,16 @@ public class Utility {
             return (int) (late * 10);
         }
         return 0;
+    }
+
+
+    public static BorrowLogFineDTO getBorrowLogFineDTO(BorrowLog borrowLog){
+
+        return new BorrowLogFineDTO(borrowLog, calculateFine(borrowLog));
+    }
+
+    public static List<BorrowLogFineDTO> getBorrowLogFineDTOList(List<BorrowLog> borrowLogList){
+        return borrowLogList.stream().map(Utility::getBorrowLogFineDTO).collect(Collectors.toList());
     }
 
 }

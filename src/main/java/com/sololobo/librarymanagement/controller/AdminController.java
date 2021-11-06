@@ -5,6 +5,7 @@ import com.sololobo.librarymanagement.domain.User;
 import com.sololobo.librarymanagement.repository.BookRepository;
 import com.sololobo.librarymanagement.repository.BorrowLogRepository;
 import com.sololobo.librarymanagement.repository.UserRepository;
+import com.sololobo.librarymanagement.utility.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,7 +55,7 @@ public class AdminController {
         if (byId.isPresent()){
             User user = byId.get();
             return new ModelAndView(("userBorrowLog"))
-                    .addObject("borrowLogs", borrowLogRepository.getBorrowLogBy(user.getId()))
+                    .addObject("borrowLogFineDTOList", Utility.getBorrowLogFineDTOList(borrowLogRepository.getBorrowLogBy(user.getId())))
                     .addObject("user", user);
         }
         throw new IllegalArgumentException("User not found!");
