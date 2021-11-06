@@ -17,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.transaction.Transactional;
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -75,12 +74,9 @@ public class BorrowLogController {
                     bookRepository.save(book);
                     borrowLogRepository.delete(borrowLog);
 
-                    LocalDateTime date = borrowLog.getDate();
-                    LocalDateTime now = LocalDateTime.now();
-                    long toDays = Duration.between(date, now).toDays();
-                    if (toDays > 2){
-                        long late = toDays - 2;
-                        long fine = late*10;
+
+                    int fine = Utility.calculateFine(byId.get());
+                    if (fine > 0){
                         return "Your fine is: " + fine;
                     }
                 }

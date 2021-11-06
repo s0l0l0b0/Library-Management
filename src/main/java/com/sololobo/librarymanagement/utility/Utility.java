@@ -1,12 +1,15 @@
 package com.sololobo.librarymanagement.utility;
 
 
+import com.sololobo.librarymanagement.domain.BorrowLog;
 import com.sololobo.librarymanagement.domain.User;
 import com.sololobo.librarymanagement.domain.enumeration.Role;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Utility {
@@ -42,4 +45,18 @@ public class Utility {
         }
         return 0;
     }
+
+
+
+    public static int calculateFine(BorrowLog borrowLog) {
+        LocalDateTime dateOfBorrow = borrowLog.getDate();
+        LocalDateTime now = LocalDateTime.now();
+        long toDays = Duration.between(dateOfBorrow, now).toDays();
+        if (toDays > 2) {
+            long late = toDays - 2;
+            return (int) (late * 10);
+        }
+        return 0;
+    }
+
 }
