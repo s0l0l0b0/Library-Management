@@ -125,7 +125,7 @@
 <body>
 
 <div class="overlay-content">
-<h1 style="text-align: center">Borrow Info</h1>
+<h1 style="text-align: center">Borrow Info of ${user.name}</h1>
     <table id="borrowedBook">
         <tr>
             <th>ID</th>
