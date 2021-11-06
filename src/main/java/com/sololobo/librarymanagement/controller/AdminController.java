@@ -54,7 +54,8 @@ public class AdminController {
         if (byId.isPresent()){
             User user = byId.get();
             return new ModelAndView(("userBorrowLog"))
-                    .addObject("borrowLogs", borrowLogRepository.getBorrowLogBy(user.getId()));
+                    .addObject("borrowLogs", borrowLogRepository.getBorrowLogBy(user.getId()))
+                    .addObject("user", user);
         }
         throw new IllegalArgumentException("User not found!");
     }
