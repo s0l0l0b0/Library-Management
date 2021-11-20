@@ -50,7 +50,6 @@ public class Utility {
     }
 
 
-
     public static int calculateFine(BorrowLog borrowLog) {
         LocalDateTime dateOfBorrow = borrowLog.getDate();
         LocalDateTime now = LocalDateTime.now();
