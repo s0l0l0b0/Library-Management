@@ -17,7 +17,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.transaction.Transactional;
+import java.text.NumberFormat;
 import java.time.LocalDateTime;
+import java.util.Locale;
 import java.util.Optional;
 
 
@@ -77,7 +79,7 @@ public class BorrowLogController {
 
                     int fine = Utility.calculateFine(byId.get());
                     if (fine > 0){
-                        return "Your fine is: " + fine;
+                        return "Your fine is: " + (NumberFormat.getCurrencyInstance(Locale.CHINA).format(fine));
                     }
                 }
             }
